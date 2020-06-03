@@ -28,7 +28,6 @@
     <div class="back-text">
       <router-link to="/login" class="el-icon-arrow-left">返回</router-link>
     </div>
-
   </div>
 </template>
 

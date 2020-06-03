@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 //路由懒加载
 const Login = () => import('../views/Login.vue')
 const Register = ()=>import('../views/Register.vue')
-
+const Forget = ()=>import('../views/Forget.vue')
 
 const routes = [
   // {
@@ -24,6 +24,10 @@ const routes = [
   {
     path: '/register',
     component: Register
+  },
+  {
+    path: '/forget',
+    component: Forget
   }
 ]
 
