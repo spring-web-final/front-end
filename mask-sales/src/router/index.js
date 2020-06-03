@@ -5,6 +5,8 @@ Vue.use(VueRouter)
 
 //路由懒加载
 const Login = () => import('../views/Login.vue')
+const Register = ()=>import('../views/Register.vue')
+
 
 const routes = [
   // {
@@ -18,6 +20,10 @@ const routes = [
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/register',
+    component: Register
   }
 ]
 

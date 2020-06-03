@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {login} from '../../network/login.js'
+  import {login} from '../../network/form.js'
 
   export default {
     name: "LoginForm",
