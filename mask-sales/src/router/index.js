@@ -5,13 +5,14 @@ Vue.use(VueRouter)
 
 //路由懒加载
 const Login = () => import('../views/Login.vue')
-const Register = ()=>import('../views/Register.vue')
-const Forget = ()=>import('../views/Forget.vue')
+const Register = () => import('../views/Register.vue')
+const Forget = () => import('../views/Forget.vue')
+const Manage = () => import('../views/Manage.vue')
 
 const routes = [
   // {
   //   path:'',
-  //   redirect:'/home'
+  //   redirect:'/manage'
   // },
   // {
   //   path:'/home',
@@ -28,12 +29,30 @@ const routes = [
   {
     path: '/forget',
     component: Forget
-  }
+  },
+  {
+    path: '/manage',
+    component: Manage
+  },
+
 ]
 
 const router = new VueRouter({
   routes,
   mode: 'history'
+})
+//路由导航守卫
+router.beforeEach((to, from, next) => {
+  const token = window.sessionStorage.getItem('token');
+  if (to.path ==='/login'|| to.path ==='/register' ||to.path ==='/forget'){
+    return next();
+  }
+  if (!token){
+    return next('/login');
+  }else {
+    next();
+  }
+
 })
 
 export default router

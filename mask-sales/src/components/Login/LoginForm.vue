@@ -33,8 +33,8 @@
     data() {
       return {
         loginForm: {
-          username: '',
-          password: ''
+          username: 'test',
+          password: 'test'
         },
         rules: {
           username: [
@@ -50,14 +50,16 @@
     methods: {
       login() {
         this.$refs['loginFormRef'].validate(async valid => {
-          if (!valid) {
-            return;
-          }
-          const {data: result} = await login(this.loginForm);
-          if (result.status !== 200){
-            return this.$message.success('登录失败！');
-          }
+          // if (!valid) {
+          //   return;
+          // }
+          // const {data: result} = await login(this.loginForm);
+          // if (result.status !== 200){
+          //   return this.$message.success('登录失败！');
+          // }
           this.$message.success('登录成功！');
+          window.sessionStorage.setItem('token','666');
+          this.$router.push('/manage')
         })
       }
     }
