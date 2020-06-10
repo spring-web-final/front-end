@@ -8,6 +8,7 @@ const Login = () => import('../views/Login.vue')
 const Register = () => import('../views/Register.vue')
 const Forget = () => import('../views/Forget.vue')
 const Manage = () => import('../views/Manage.vue')
+const Welcome = ()=>import('../components/Common/Welcome.vue')
 
 const routes = [
   // {
@@ -32,8 +33,16 @@ const routes = [
   },
   {
     path: '/manage',
-    component: Manage
+    component: Manage,
+    redirect:'/welcome',
+    children:[
+      {
+        path:'/welcome',
+        component: Welcome
+      }
+    ]
   },
+
 
 ]
 
