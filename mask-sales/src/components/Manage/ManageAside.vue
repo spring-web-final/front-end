@@ -1,13 +1,11 @@
 <template>
   <Aside>
-    <el-submenu v-for="item in menu" :index="item.id" :key="item.id">
-      <template slot="title">
-        <span>{{item.title}}</span>
-      </template>
-      <el-menu-item v-for="subItem in item.sub" :index="subItem.id" :key="subItem.id">
-        {{subItem.title}}
-      </el-menu-item>
-    </el-submenu>
+    <el-menu-item v-for="item in menu" :index="item.id" :key="item.id" @click="saveActivePath(item.id)">
+      <i :class="item.icon"></i>
+      <span slot="title">
+        {{item.title}}
+      </span>
+    </el-menu-item>
   </Aside>
 </template>
 
@@ -16,31 +14,50 @@
 
   export default {
     name: "ManageAside",
+    components: {Aside},
     data() {
       return {
         menu: [
           {
-            id: "0",
-            title: "菜单一",
-            sub: [{id: "0", title: "序号一"}, {id: "1", title: "序号一"}, {id: "2", title: "序号一"}]
+            id: "/list",
+            title: "列表",
+            icon: "el-icon-document"
           },
           {
-            id: "1",
-            title: "菜单一",
-            sub: [{id: "0", title: "序号一"}, {id: "1", title: "序号一"}, {id: "2", title: "序号一"}]
+            id: "/chart",
+            title: "图表",
+            icon: "el-icon-data-analysis"
           },
           {
-            id: "2",
-            title: "菜单一",
-            sub: [{id: "0", title: "序号一"}, {id: "1", title: "序号一"}, {id: "2", title: "序号一"}]
+            id: "/add",
+            title: "添加",
+            icon:"el-icon-circle-plus-outline"
+          },
+          {
+            id: "/search",
+            title: "搜索",
+            icon: "el-icon-search"
+          },
+          {
+            id: "/profile",
+            title: "我的",
+            icon: "el-icon-user"
           }
         ]
       }
     },
-    components: {Aside}
+    methods:{
+      saveActivePath(path){
+        window.sessionStorage.setItem('activePath',path);
+      }
+    }
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.el-menu-item{
+  span{
+    font-size: 18px;
+  }
+}
 </style>

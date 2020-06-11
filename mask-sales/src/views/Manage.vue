@@ -3,11 +3,11 @@
     <el-header height="70px">
       <div>
         <img src="../../src/assets/img/masks.png" alt="mask">
-        <span>人员登记系统</span>
+        <span>防疫登记后台管理系统</span>
       </div>
     </el-header>
     <el-container>
-      <el-aside width="280px">
+      <el-aside width="240px">
         <ManageAside/>
       </el-aside>
       <el-main>
@@ -19,11 +19,10 @@
 
 <script>
   import ManageAside from "../components/Manage/ManageAside";
-  import ManageMain from "../components/Manage/ManageMain";
 
   export default {
     name: "Manage",
-    components: {ManageMain, ManageAside},
+    components: {ManageAside},
     methods: {
       logout() {
         window.sessionStorage.clear();
@@ -68,7 +67,7 @@
 
   .el-main {
     background: #ffffff;
-    border-left: 1px solid #e6e6e6 !important;
+    /*border-left: 1px solid #e6e6e6 !important;*/
 
   }
 

@@ -1,19 +1,27 @@
 import Vue from 'vue'
+import 'element-ui/lib/theme-chalk/display.css';
+
 import {
   Button,
   Form,
   FormItem,
   Input,
   Message,
+  Submenu,
+  MenuItemGroup,
+  MenuItem,
+  Row,
+  Col,
+  Tabs,
+  TabPane,
+  Menu,
   Container,
   Header,
   Aside,
   Main,
-  Menu,
-  Submenu,
-  MenuItemGroup,
-  MenuItem
-
+  Table,
+  TableColumn,
+  Card
 
 } from 'element-ui'
 
@@ -21,12 +29,20 @@ Vue.use(Button)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
+Vue.use(Submenu)
+Vue.use(MenuItemGroup)
+Vue.use(MenuItem)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Menu)
 Vue.use(Container)
 Vue.use(Header)
 Vue.use(Aside)
 Vue.use(Main)
-Vue.use(Menu)
-Vue.use(Submenu)
-Vue.use(MenuItemGroup)
-Vue.use(MenuItem)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Card)
+
 Vue.prototype.$message = Message

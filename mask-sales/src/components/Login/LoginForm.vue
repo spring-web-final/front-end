@@ -26,7 +26,8 @@
 </template>
 
 <script>
-  import {login} from '../../network/form.js'
+  import {login} from '../../network/request.js'
+
 
   export default {
     name: "LoginForm",
@@ -58,7 +59,7 @@
           //   return this.$message.success('登录失败！');
           // }
           this.$message.success('登录成功！');
-          window.sessionStorage.setItem('token','666');
+          window.sessionStorage.setItem('token', '666');
           this.$router.push('/manage')
         })
       }

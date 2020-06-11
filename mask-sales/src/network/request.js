@@ -1,14 +1,9 @@
-import axios from 'axios'
+import {request} from './base'
 
-export function request() {
-  const instance = axios.create({
-    //接口地址待定
-    baseURL:'http://127.0.0.1:8000',
-    timeout:5000
-  });
-  instance.interceptors.request.use(config=>{
-    config.headers.Authorization = window.sessionStorage.getItem('token');
-    return config;
-  })
-  return instance;
+export function login(formData) {
+  return request.post('/login',formData)
+}
+
+export function getListData() {
+  return request.get('/users/getList/all')
 }
