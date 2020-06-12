@@ -38,13 +38,13 @@
   }
 
   .el-header {
-    background: #409EFF;
+    background: rgba(64, 158, 255, 0.86);
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #ffffff;
     font-size: 25px;
-
+    box-shadow: 0 3px 3px rgba(144, 147, 153, 0.4);
     > div {
       display: flex;
       align-items: center;
@@ -64,10 +64,12 @@
 
   }
 
+  .el-aside{
+    background: rgba(192, 196, 204, 0.1);
 
+  }
   .el-main {
-    background: #ffffff;
-
+    background: rgba(192, 196, 204, 0.1);
   }
 
 </style>

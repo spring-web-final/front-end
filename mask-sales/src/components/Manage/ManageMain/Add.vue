@@ -34,6 +34,7 @@
 
 <script>
   import Moment from 'moment'
+  import {postAddForm} from "../../../network/request";
 
   export default {
     name: "Add",
@@ -52,10 +53,6 @@
           callback();
         }
       };
-      let validateDate = (rule, value, callback) => {
-        console.log(value)
-        callback();
-      };
       return {
         addForm: {
           name: '',
@@ -64,20 +61,19 @@
           flight: '',
           train: '',
           phone: '',
-          isCorrect: false
+          isCorrect: true
         },
-        pickerOptions:{
+        pickerOptions: {
           disabledDate(time) {
             return time.getTime() > Date.now() - 8.64e6
           }
         },
         rules: {
           name: [{required: true, message: '请输入姓名', trigger: 'blur'}],
-          date:[{validate:validateDate, trigger: 'blur'}],
           flight: [{required: true, message: '请输入航班号', trigger: 'blur'}],
           train: [{required: true, message: '请输入列车号', trigger: 'blur'}],
           phone: [
-            {validator: validatePhone, trigger: 'blur'}
+            {validator: validatePhone, trigger: 'change'}
           ],
 
         }
@@ -85,8 +81,23 @@
     },
     methods: {
       onSubmit() {
-        console.log(this.addForm);
+        let formData = {};
+        Object.keys(this.addForm).forEach(key => {
+          if (key !== 'isCorrect') {
+            formData[key] = this.addForm[key];
+          }
+        })
+        console.log(formData);
+        //提交表单
+        // postAddForm(formData).then(res=>{
+        //   if (res.code === 0){
+        //     this.$message.success('提交成功!');
+        // this.$refs['addFormRef'].resetFields();
 
+        //   }else {
+        //     this.$message.error('提交失败!');
+        //   }
+        // })
       },
     },
     computed: {}

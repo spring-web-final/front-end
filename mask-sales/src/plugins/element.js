@@ -25,7 +25,9 @@ import {
   DatePicker,
   Option,
   Radio,
-  RadioGroup
+  RadioGroup,
+  Select,
+
 
 } from 'element-ui'
 
@@ -52,5 +54,7 @@ Vue.use(DatePicker)
 Vue.use(Option)
 Vue.use(Radio)
 Vue.use(RadioGroup)
+Vue.use(Select)
+
 
 Vue.prototype.$message = Message
