@@ -21,7 +21,11 @@ import {
   Main,
   Table,
   TableColumn,
-  Card
+  Card,
+  DatePicker,
+  Option,
+  Radio,
+  RadioGroup
 
 } from 'element-ui'
 
@@ -44,5 +48,9 @@ Vue.use(Main)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Card)
+Vue.use(DatePicker)
+Vue.use(Option)
+Vue.use(Radio)
+Vue.use(RadioGroup)
 
 Vue.prototype.$message = Message

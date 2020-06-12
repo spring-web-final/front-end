@@ -109,6 +109,7 @@
   }
 
   .el-card {
+    height: 760px;
     margin: 0 20px 0 5px;
   }
 

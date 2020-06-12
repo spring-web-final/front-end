@@ -2,7 +2,7 @@
   <el-card class="wrapper-card">
     <el-row>
       <el-col :span="24">
-        <el-button icon="el-icon-refresh">刷新数据</el-button>
+        <el-button icon="el-icon-refresh" @click="refresh">刷新数据</el-button>
       </el-col>
     </el-row>
     <el-row :gutter="15">
@@ -71,7 +71,6 @@
         await axios.get("http://www.dzyong.top:3005/yiqing/history")
           .then(res => {
             this.dataList = res.data.data;
-            console.log(this.dataList)
           })
         this.latestList = this.dataList.slice(this.dataList.length - this.num);
         this.analyzeData(this.latestList);
@@ -84,9 +83,10 @@
           this.confirmedList.push(item.confirmedNum - item.curesNum - item.deathsNum);
           this.dateList.push(item.date);
         })
-        console.log(this.deathList)
       },
-
+      refresh(){
+        location.reload();
+      }
     },
     computed: {
       deathdata() {
@@ -118,7 +118,7 @@
           labels: this.dateList,
           datasets: [
             {
-              label: '疑似人数',
+              label: '新增疑似',
               backgroundColor: '#f88207',
               data: this.suspectedList
             }
@@ -146,7 +146,7 @@
 <style scoped lang="scss">
   .wrapper-card {
     height: 760px;
-    margin: 0 20px 0 15px;
+    margin: 0 20px 0 5px;
   }
   .item-card{
     height: 310px;
