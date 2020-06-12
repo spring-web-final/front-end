@@ -1,13 +1,13 @@
 <template>
   <el-container>
-    <el-header height="70px">
+    <el-header height="60px">
       <div>
         <img src="../../src/assets/img/masks.png" alt="mask">
         <span>防疫登记后台管理系统</span>
       </div>
     </el-header>
     <el-container>
-      <el-aside width="240px">
+      <el-aside width="230px">
         <ManageAside/>
       </el-aside>
       <el-main>
@@ -50,7 +50,7 @@
       align-items: center;
 
       img {
-        height: 65px;
+        height: 55px;
       }
 
       span {
@@ -67,7 +67,6 @@
 
   .el-main {
     background: #ffffff;
-    /*border-left: 1px solid #e6e6e6 !important;*/
 
   }
 

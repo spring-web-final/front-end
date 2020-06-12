@@ -9,9 +9,9 @@
       <el-col :span="24">
         <el-table
           :data="tableData"
-          height="590"
+          height="530"
           border
-          style="width: 100%">
+          style="width: 95%">
           <el-table-column
             prop="id"
             label="编号"
@@ -105,10 +105,14 @@
 
 <style scoped>
   .el-table {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   .el-card {
-    margin: 0 30px 0 15px;
+    margin: 0 20px 0 5px;
+  }
+
+  .el-button{
+    margin-bottom: 10px;
   }
 </style>

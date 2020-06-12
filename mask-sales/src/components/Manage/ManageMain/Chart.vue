@@ -52,7 +52,14 @@
         dateList: [],
         chartOptions: {
           responsive: true,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                stepSize:1
+              }
+            }]
+          }
         }
       }
     },
@@ -138,16 +145,16 @@
 
 <style scoped lang="scss">
   .wrapper-card {
-    height: 690px;
-    margin: 0 30px 0 15px;
+    height: 760px;
+    margin: 0 20px 0 15px;
   }
   .item-card{
-    height: 270px;
-    width: 650px;
+    height: 310px;
+    width: 740px;
     margin: 20px 0 0 0;
   }
   .item-chart {
     height: 250px;
-    width: 600px;
+    width: 700px;
   }
 </style>
