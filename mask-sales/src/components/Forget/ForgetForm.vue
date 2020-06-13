@@ -120,6 +120,7 @@
 
     .back-text {
       a {
+        font-size: 15px;
         text-decoration: none;
         color: #909399;
       }

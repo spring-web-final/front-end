@@ -60,6 +60,7 @@
           // }
           this.$message.success('登录成功！');
           window.sessionStorage.setItem('token', '666');
+          window.sessionStorage.setItem('account',this.loginForm.username);
           this.$router.push('/manage')
         })
       }
@@ -110,6 +111,7 @@
 
     .register-text, .forget-text {
       a {
+        font-size: 15px;
         text-decoration: none;
         color: #909399;
       }
@@ -123,7 +125,7 @@
 
     .forget-text {
       position: absolute;
-      left: 73%;
+      left: 75%;
       top: 90%;
     }
   }

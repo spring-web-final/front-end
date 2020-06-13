@@ -46,6 +46,12 @@
         ]
       }
     },
+    mounted() {
+      let path = window.sessionStorage.getItem('activePath');
+      if (path){
+        this.$router.push(path);
+      }
+    },
     methods:{
       saveActivePath(path){
         window.sessionStorage.setItem('activePath',path);
