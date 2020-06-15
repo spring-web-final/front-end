@@ -19,7 +19,12 @@ import {
     RadioGroup,
     Calendar,
     DatetimePicker,
-    Popup
+    Popup,
+    DropdownMenu,
+    DropdownItem,
+    Search,
+    Tab,
+    Tabs
   } from 'vant';
 
 Vue.use(Button);
@@ -42,9 +47,11 @@ Vue.use(RadioGroup);
 Vue.use(Calendar);
 Vue.use(DatetimePicker);
 Vue.use(Popup);
-
-
-
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.use(Search);
+Vue.use(Tab);
+Vue.use(Tabs);
 
 
 
