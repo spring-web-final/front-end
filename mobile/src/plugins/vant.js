@@ -12,7 +12,14 @@ import {
     Card,
     PullRefresh,
     Sticky,
-    NavBar
+    NavBar,
+    Form,
+    Field,
+    Radio,
+    RadioGroup,
+    Calendar,
+    DatetimePicker,
+    Popup
   } from 'vant';
 
 Vue.use(Button);
@@ -28,6 +35,17 @@ Vue.use(Card);
 Vue.use(PullRefresh);
 Vue.use(Sticky);
 Vue.use(NavBar);
+Vue.use(Form);
+Vue.use(Field);
+Vue.use(Radio);
+Vue.use(RadioGroup);
+Vue.use(Calendar);
+Vue.use(DatetimePicker);
+Vue.use(Popup);
+
+
+
+
 
 
 
