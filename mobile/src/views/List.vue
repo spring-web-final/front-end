@@ -1,13 +1,11 @@
 <template>
   <div>
-    <van-sticky>
-      <van-row class="sticky-box">
-        <van-col span="12" class="sticky-text">来访人员列表</van-col>
-        <van-col span="7" offset="3" class="sticky-btn">
-          <van-button color="#fa7298" size="small" @click="download">下载所有记录</van-button>
-        </van-col>
-      </van-row>
-    </van-sticky>
+    <TopBar>
+      <van-col span="12" class="sticky-text">来访人员列表</van-col>
+      <van-col span="7" offset="3" class="sticky-btn">
+        <van-button color="#fa7298" size="small" @click="download">下载所有记录</van-button>
+      </van-col>
+    </TopBar>
     <div class="list">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh" success-text="刷新成功">
         <van-list
@@ -15,10 +13,14 @@
                 :finished="finished"
                 finished-text="加载完毕"
                 @load="onLoad">
-          <van-cell class="list-item" v-for="item in list"
-                    :key="item.id" :title="item.name"
-                    is-link :to="{ name: 'detail', params: { id: item.id }}"
-                    @click="commitData(item)"/>
+          <div v-for="item in list">
+            <Card>
+              <van-cell class="list-item"
+                        :key="item.id" :title="item.name"
+                        is-link :to="{ name: 'detail', params: { id: item.id }}"
+                        @click="commitData(item)"/>
+            </Card>
+          </div>
         </van-list>
       </van-pull-refresh>
     </div>
@@ -31,13 +33,15 @@
 <script>
   import TabBar from "../components/Common/tabBar/TabBar";
 
-  import { mapMutations } from 'vuex'
+  import {mapMutations} from 'vuex'
 
   import XLSX from 'xlsx'
+  import TopBar from "../components/Common/topBar/TopBar";
+  import Card from "../components/Common/Card";
 
   export default {
     name: "List",
-    components: {TabBar},
+    components: {Card, TopBar, TabBar},
     data() {
       return {
         mock: {
@@ -407,14 +411,14 @@
       getList() {
         this.list = this.mock.data.data
       },
-      download(){
+      download() {
         let ws_name = "People"
         let ws = XLSX.utils.json_to_sheet(this.list);
         let wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, ws_name);
         XLSX.writeFile(wb, "List.xlsx");
       },
-      commitData(item){
+      commitData(item) {
         this.saveItem(item);
       }
     },
@@ -423,21 +427,20 @@
 
 <style scoped lang="scss">
   .sticky-box {
-    height: 48px;
-    line-height: 48px;
     background-color: #fa7298;
-    .sticky-text {
-      margin-left: 15px;
-      font-size: 18px;
-      color: #ffffff;
-    }
+  }
+
+  .sticky-text {
+    margin-left: 15px;
+    font-size: 18px;
+    color: #ffffff;
   }
 
   .list {
     margin-bottom: 45px;
 
     .list-item {
-      border-top: #F4F4F4 solid 2px;
+      /*border-top: #F4F4F4 solid 2px;*/
     }
   }
 

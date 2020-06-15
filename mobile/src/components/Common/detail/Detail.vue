@@ -1,15 +1,13 @@
 <template>
   <div>
-    <van-sticky>
-      <van-row class="sticky-box">
-        <van-col span="9">
-          <van-icon name="arrow-left" size="20" @click="back"/>
-        </van-col>
-        <van-col span="5" class="sticky-text">
-          详细信息
-        </van-col>
-      </van-row>
-    </van-sticky>
+    <TopBar bg-color="#ffffff">
+      <van-col span="9">
+        <van-icon name="arrow-left" size="20" @click="back"/>
+      </van-col>
+      <van-col span="5" class="sticky-text">
+        详细信息
+      </van-col>
+    </TopBar>
     <Card>
       <van-cell title="编号" :value="getItem.id" />
       <van-cell title="姓名" :value="getItem.name" />
@@ -25,10 +23,11 @@
 <script>
   import Card from "../Card";
   import { mapGetters } from 'vuex'
+  import TopBar from "../topBar/TopBar";
 
   export default {
     name: "Detail",
-    components: {Card},
+    components: {TopBar, Card},
     data() {
       return {
         detailItem:{}
@@ -50,8 +49,6 @@
 
 <style scoped lang="scss">
   .sticky-box {
-    height: 48px;
-    line-height: 48px;
     background-color: #ffffff;
 
     .van-icon{
