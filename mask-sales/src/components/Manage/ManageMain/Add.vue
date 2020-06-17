@@ -12,7 +12,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="登记日期">
-          <el-date-picker value-format="yyyy-MM-dd" type="date" :editable="false" v-model="addForm.date"
+          <el-date-picker value-format="yyyy-MM-dd" type="date" :editable="false" v-model="addForm.time"
                           style="width: 100%;" :picker-options="pickerOptions"></el-date-picker>
         </el-form-item>
         <el-form-item label="航班号" prop="flight">
@@ -34,7 +34,7 @@
 
 <script>
   import Moment from 'moment'
-  import {postAddForm} from "../../../network/request";
+  import axios from 'axios'
 
   export default {
     name: "Add",
@@ -57,7 +57,7 @@
         addForm: {
           name: '',
           sex: '男',
-          date: Moment().format('YYYY-MM-DD'),
+          time: Moment().format('YYYY-MM-DD'),
           flight: '',
           train: '',
           phone: '',
@@ -70,8 +70,6 @@
         },
         rules: {
           name: [{required: true, message: '请输入姓名', trigger: 'blur'}],
-          flight: [{required: true, message: '请输入航班号', trigger: 'blur'}],
-          train: [{required: true, message: '请输入列车号', trigger: 'blur'}],
           phone: [
             {validator: validatePhone, trigger: 'change'}
           ],
@@ -80,24 +78,30 @@
       }
     },
     methods: {
-      onSubmit() {
-        let formData = {};
-        Object.keys(this.addForm).forEach(key => {
-          if (key !== 'isCorrect') {
-            formData[key] = this.addForm[key];
+      async onSubmit() {
+        let addData = {};
+        this.$refs['addFormRef'].validate(async valid => {
+          if (!valid) {
+            return;
           }
+          addData.name = this.addForm.name;
+          addData.sex = this.addForm.sex;
+          addData.phone = this.addForm.phone;
+          addData.flight = this.addForm.flight;
+          addData.train = this.addForm.train;
+          addData.time = this.addForm.time;
+          addData.wid = window.sessionStorage.getItem('wid');
+          console.log(addData);
+          await axios.post('http://localhost:8081/ssm/users/add', addData)
+            .then(res => {
+              if (res.data.resCode === 0) {
+                this.$message.success('添加成功！');
+                this.$refs['addFormRef'].resetFields();
+              } else {
+                this.$message.error('添加失败！');
+              }
+            })
         })
-        console.log(formData);
-        //提交表单
-        // postAddForm(formData).then(res=>{
-        //   if (res.code === 0){
-        //     this.$message.success('提交成功!');
-        // this.$refs['addFormRef'].resetFields();
-
-        //   }else {
-        //     this.$message.error('提交失败!');
-        //   }
-        // })
       },
     },
     computed: {}

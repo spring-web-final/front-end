@@ -19,23 +19,19 @@
     <div class="register-text">
       <router-link to="/register">注册用户</router-link>
     </div>
-    <div class="forget-text">
-      <router-link to="/forget">忘记密码</router-link>
-    </div>
   </div>
 </template>
 
 <script>
-  import {login} from '../../network/request.js'
-
+  import axios from 'axios'
 
   export default {
     name: "LoginForm",
     data() {
       return {
         loginForm: {
-          username: 'test',
-          password: 'test'
+          username: '',
+          password: ''
         },
         rules: {
           username: [
@@ -50,18 +46,25 @@
     },
     methods: {
       login() {
+        let loginData = {};
         this.$refs['loginFormRef'].validate(async valid => {
-          // if (!valid) {
-          //   return;
-          // }
-          // const {data: result} = await login(this.loginForm);
-          // if (result.status !== 200){
-          //   return this.$message.success('登录失败！');
-          // }
-          this.$message.success('登录成功！');
-          window.sessionStorage.setItem('token', '666');
-          window.sessionStorage.setItem('account',this.loginForm.username);
-          this.$router.push('/manage')
+          if (!valid) {
+            return;
+          }
+          loginData.account = this.loginForm.username;
+          loginData.password = this.loginForm.password;
+          await axios.post('http://localhost:8081/ssm/login',loginData)
+            .then(res => {
+              if (res.data.resCode === 0) {
+                window.sessionStorage.setItem('token', 'signed');
+                window.sessionStorage.setItem('wid', res.data.data.id);
+                window.sessionStorage.setItem('account', this.loginForm.username);
+                this.$message.success('登录成功！');
+                this.$router.push('/manage')
+              } else {
+                this.$message.error('登录失败！');
+              }
+            })
         })
       }
     }

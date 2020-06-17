@@ -27,6 +27,7 @@
 
 <script>
   import QRCode from 'qrcode'
+  import axios from 'axios'
 
   export default {
     name: "Profile",
@@ -89,17 +90,24 @@
             console.error('二维码生成失败！', err);
           })
       },
-      change() {
+      async change() {
         let formData = {};
-        let url = '';
         formData.old_password = this.profileForm.oldPwd;
         formData.new_password = this.profileForm.pwd;
         formData.account = window.sessionStorage.getItem('account');
-        url = `/update?account=${formData.account}`;
-        console.log(formData,url);
+        await axios.put('http://localhost:8081/ssm/update', formData)
+          .then(res=>{
+            if (res.data.resCode === 0) {
+              this.$message.success('修改成功！');
+              window.sessionStorage.clear();
+              this.$router.push('/login');
+            } else {
+              this.$message.error('修改失败！');
+            }
+          })
       },
       logout() {
-        window.sessionStorage.removeItem('token');
+        window.sessionStorage.clear();
         this.$router.push('/login');
       }
     }
@@ -125,6 +133,5 @@
     height: 400px;
     width: 400px;
     margin: 150px 0 0 300px;
-
   }
 </style>

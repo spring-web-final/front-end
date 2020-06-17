@@ -5,10 +5,10 @@
     </div>
     <div class="register-form">
       <el-form label-width="80px" label-position="top" :model="registerForm" :rules="rules" ref="registerFormRef">
-        <el-form-item prop="phone">
-          <el-input v-model="registerForm.phone" placeholder="手机号码"></el-input>
+        <el-form-item prop="name">
+          <el-input v-model="registerForm.name" placeholder="姓名"></el-input>
         </el-form-item>
-        <el-form-item prop="username">
+        <el-form-item prop="account">
           <el-input v-model="registerForm.username" placeholder="帐号"></el-input>
         </el-form-item>
         <el-form-item prop="pwd">
@@ -32,10 +32,11 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     name: "RegisterForm",
     data() {
-      let RegEx = /^1[3-9]\d{9}$/;
       let validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
@@ -55,24 +56,16 @@
           callback();
         }
       };
-      let validatePhone = (rule, value, callback) => {
-        if (!RegEx.test(value)) {
-          callback(new Error('请输入正确的手机号'));
-        } else {
-          callback();
-        }
-      };
       return {
         registerForm: {
-          phone: '',
+          name: '',
           username: '',
           pwd: '',
           confirmPwd: ''
         },
         rules: {
-          phone: [
-            {required: true, message: '请输入手机号', trigger: 'blur'},
-            {validator: validatePhone, trigger: 'blur'}
+          name: [
+            {required: true, message: '请输入姓名', trigger: 'blur'},
           ],
           username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
           pwd: [{
@@ -88,7 +81,24 @@
     },
     methods: {
       register() {
-
+        let registerData = {};
+        this.$refs['registerFormRef'].validate(async valid => {
+          if (!valid) {
+            return;
+          }
+          registerData.name = this.registerForm.name;
+          registerData.account = this.registerForm.username;
+          registerData.password = this.registerForm.pwd;
+          await axios.post('http://localhost:8081/ssm/register', registerData)
+            .then(res => {
+              if (res.data.resCode === 0) {
+                this.$message.success('注册成功！');
+                this.$router.push('/login')
+              } else {
+                this.$message.error('注册失败！');
+              }
+            })
+        })
       },
       reset() {
         this.$refs['registerFormRef'].resetFields();

@@ -53,44 +53,24 @@
 </template>
 
 <script>
-  import {getListData} from '../../../network/request'
   import XLSX from 'xlsx'
+  import axios from 'axios'
 
   export default {
-
-
     name: "List",
     created() {
       this.getList();
     },
     data() {
       return {
-        mock: {
-          "data": {
-            "data": [
-              {
-                "id": "1",
-                "name": "王五",
-                "sex": "男",
-                "time": "2017-4-4",
-                "flight": "D301",
-                "train": "G208",
-                "phone": "13728365292"
-              }
-            ]
-          },
-          "totalNumber": 2,
-          "resCode": "OK"
-        },
         tableData: [],
       }
     },
     methods: {
-      getList() {
-        // getListData().then(res =>{
-        //   this.tableData = res.data.data;
-        // })
-        this.tableData = this.mock.data.data;
+      async getList() {
+        await axios.post('http://localhost:8081/ssm/news/getList').then(res =>{
+          this.tableData = res.data.data.data;
+        })
       },
       download() {
         let ws_name = "People"

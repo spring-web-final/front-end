@@ -5,9 +5,8 @@
         <el-input placeholder="请输入条件" v-model="searchData">
           <el-select v-model="select" slot="prepend" placeholder="请选择条件">
             <el-option label="编号" value="id"></el-option>
-            <el-option label="姓名" value="name"></el-option>
             <el-option label="手机号" value="phone"></el-option>
-            <el-option label="日期" value="date"></el-option>
+            <el-option label="日期" value="time"></el-option>
           </el-select>
           <el-button slot="append" icon="el-icon-search" @click="search">查询</el-button>
         </el-input>
@@ -68,7 +67,7 @@
 
 <script>
   import LineChart from "../../Common/LineChart";
-  import {searchByOption} from "../../../network/request";
+  import axios from 'axios'
 
 
   export default {
@@ -82,48 +81,47 @@
         select: '',
         tableData: [],
         res: '搜索到共 0 条记录',
-        mock: {
-          "data": {
-            "data": [
-              {
-                "id": "1",
-                "name": "王五",
-                "sex": "男",
-                "time": "2017-4-4",
-                "flight": "D301",
-                "train": "G208",
-                "phone": "13728365292"
-              },
-              {
-                "id": "1",
-                "name": "王五",
-                "sex": "男",
-                "time": "2017-4-4",
-                "flight": "D301",
-                "train": "G208",
-                "phone": "13728365292"
-              }
-            ]
-          },
-          "totalNumber": 2,
-          "resCode": "OK"
-        },
       };
     },
     created() {
     },
     methods: {
       async search() {
+        this.tableData.splice(0, this.tableData.length);
         let select = this.select;
         let data = this.searchData;
         let url = '';
         if (select === '' || data === '') {
           return;
         } else if (select === 'id') {
-          url = `/news/getUser?id=${data}`;
+          url = `http://localhost:8081/ssm/news/getUser?id=${data}`;
         } else {
-          url = `/users/getList/${select}?${select}=${data}`;
+          url = `http://localhost:8081/ssm/users/getList/${select}?${select}=${data}`;
         }
+        console.log(url)
+        await axios.get(url)
+          .then(res => {
+            if (res.status !== 500) {
+              if (select === 'time') {
+                this.tableData = res.data.data.data;
+                console.log(this.tableData)
+                console.log(res.data.data)
+                this.res = `搜索到共 ${res.data.data.total} 条记录`
+              } else {
+                if (res.data.data) {
+                  console.log(this.tableData)
+                  this.tableData.push(res.data.data);
+                  console.log(res.data.data)
+                  console.log(this.tableData[0])
+                  this.res = '搜索到共 1 条记录'
+                }
+              }
+            } else {
+              this.$message.error('服务器出错！');
+            }
+          })
+
+
         // await searchByOption(url, data).then(res => {
         //   if (res.data.totalNumber){
         //     this.tableData.push(res.data);

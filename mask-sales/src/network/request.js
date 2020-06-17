@@ -1,11 +1,11 @@
-import {request} from './base'
+import request from './base'
 
 export function login(formData) {
   return request.post('/login',formData);
 }
 
 export function getListData() {
-  return request.get('/users/getList/all');
+  return request.post('/news/getList');
 }
 
 export function postAddForm(formData) {
