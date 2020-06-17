@@ -73,9 +73,6 @@
         </van-form>
       </Card>
     </div>
-    <div class="tab-bar">
-      <TabBar/>
-    </div>
   </div>
 
 </template>

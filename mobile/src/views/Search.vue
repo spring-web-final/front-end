@@ -45,13 +45,13 @@
         {{resText}}
       </div>
       <Card v-for="(item,index) in resList" :key="index">
-        <van-cell title="编号" :value="item.id" />
-        <van-cell title="姓名" :value="item.name" />
-        <van-cell title="性别" :value="item.sex" />
-        <van-cell title="登记日期" :value="item.time" />
-        <van-cell title="航班号" :value="item.flight" />
-        <van-cell title="列车号" :value="item.train" />
-        <van-cell title="手机号" :value="item.phone" />
+        <van-cell title="编号" :value="item.id"/>
+        <van-cell title="姓名" :value="item.name"/>
+        <van-cell title="性别" :value="item.sex"/>
+        <van-cell title="登记日期" :value="item.time"/>
+        <van-cell title="航班号" :value="item.flight"/>
+        <van-cell title="列车号" :value="item.train"/>
+        <van-cell title="手机号" :value="item.phone"/>
       </Card>
     </div>
     <div class="tab-bar">
@@ -67,6 +67,7 @@
 
   import Moment from "moment";
   import {searchByOption} from "../network/request";
+  import axios from 'axios'
 
   export default {
     name: "Search",
@@ -74,25 +75,8 @@
     data() {
       return {
         resText: '搜索到共 0 条记录',
-        resList:[{
-          "id": "1",
-          "name": "王五",
-          "sex": "男",
-          "time": "2017-4-4",
-          "flight": "D301",
-          "train": "G208",
-          "phone": "13728365292"
-        },
-          {
-            "id": "1",
-            "name": "王五",
-            "sex": "男",
-            "time": "2017-4-4",
-            "flight": "D301",
-            "train": "G208",
-            "phone": "13728365292"
-          }],
-        isReadonly:false,
+        resList: [],
+        isReadonly: false,
         tempId: '',
         tempName: '',
         tempPhone: '',
@@ -105,16 +89,9 @@
         activeItem: 'id',
         searchData: '',
         selected: 'id',
-        selectList: [
-          {id: 1, text: '编号', value: 'id'},
-          {id: 2, text: '姓名', value: 'name'},
-          {id: 3, text: '手机号', value: 'phone'},
-          {id: 4, text: '日期', value: 'date'},
-        ],
         tabList: [
           {title: '编号', name: 'id'},
           {title: '姓名', name: 'name'},
-          {title: '手机号', name: 'phone'},
           {title: '登记日期', name: 'date'}
         ]
       }
@@ -156,29 +133,36 @@
         this.show = false;
       },
       // 发起搜索请求，在前端无法对输入内容的验证，要在服务器做验证，避免出现类似用字符串发起搜索编号请求。
-      onSearch() {
+      async onSearch() {
+        this.resList.splice(0, this.resList.length);
         let select = this.activeItem;
         let data = this.searchData;
         let url = '';
         if (select === '' || data === '') {
           return;
         } else if (select === 'id') {
-          url = `/news/getUser?id=${data}`;
+          url = `http://localhost:8081/ssm/news/getUser?id=${data}`;
+        } else if (select === 'date') {
+          url = `http://localhost:8081/ssm/users/getList/time?time=${data}`;
         } else {
-          url = `/users/getList/${select}?${select}=${data}`;
+          url = `http://localhost:8081/ssm/users/getList/${select}?${select}=${data}`;
         }
-
-        // await searchByOption(url, data).then(res => {
-        //   if (res.data.totalNumber){
-        //     this.resList.push(res.data);
-        //     this.res = '搜索到共 1 条记录'
-        //   }else {
-        //     this.resList = res.data.data.data;
-        //     this.res = `搜索到共 ${res.data.totalNumber} 条记录`
-        //   }
-        // })
-
-
+        await axios.get(url)
+            .then(res => {
+              if (res.status !== 500) {
+                if (select === 'date' || select === 'name') {
+                  this.resList = res.data.data.data;
+                  this.resText = `搜索到共 ${res.data.data.total} 条记录`
+                } else {
+                  if (res.data.data) {
+                    this.resList.push(res.data.data);
+                    this.resText = '搜索到共 1 条记录'
+                  }
+                }
+              } else {
+                this.$message.error('服务器出错！');
+              }
+            })
       },
       // 记录搜索框的内容，用于来回切换tab的时候已输入数据保活
       onInput(value) {
@@ -198,9 +182,9 @@
     // 为了修复手机端在日期tab下点击搜索框不弹出键盘的bug，在点击日期tab的时候设置了搜索框只读，
     // 导致在日期tab情况下无法触发搜索框的input事件，进而导致已输入的日期数据无法保活，所以在这里用监听器，当激活的tab为日期tab时，
     // 把内容存到tempDate保活。
-    watch:{
-      searchData(){
-        if (this.activeItem === 'date'){
+    watch: {
+      searchData() {
+        if (this.activeItem === 'date') {
           this.tempDate = this.searchData;
         }
       }
@@ -219,11 +203,11 @@
     height: 68px;
   }
 
-  .search-res{
+  .search-res {
     margin-bottom: 70px;
   }
 
-  .res-text{
+  .res-text {
     margin: 2px 0 0 17px;
     font-size: 13px;
     color: #787878;

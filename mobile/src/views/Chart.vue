@@ -29,10 +29,11 @@
   import TabBar from "../components/Common/tabBar/TabBar";
   import TopBar from "../components/Common/topBar/TopBar";
   import LineChart from "../components/Chart/LineChart";
+  import Card from "../components/Common/Card";
+
 
   import {Toast} from 'vant';
   import axios from "axios";
-  import Card from "../components/Common/Card";
 
 
   export default {

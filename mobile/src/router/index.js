@@ -3,50 +3,86 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const Home = () => import('../views/Home.vue')
-const List = ()=>import('../views/List.vue')
-const Chart = ()=>import('../views/Chart.vue')
-const Add = ()=>import('../views/Add.vue')
-const Search = ()=>import('../views/Search.vue')
-const Profile = ()=>import('../views/Profile.vue')
-const Detail = ()=>import('../components/Common/detail/Detail.vue')
+const List = () => import('../views/List.vue')
+const Chart = () => import('../views/Chart.vue')
+const Add = () => import('../views/Add.vue')
+const Search = () => import('../views/Search.vue')
+const Profile = () => import('../views/Profile/Profile.vue')
+const Detail = () => import('../components/Common/detail/Detail.vue')
+const QRCode = () => import('../views/Profile/QRCode.vue')
+const Change = () => import('../views/Profile/Change.vue')
+const Ourselves = () => import('../views/Profile/Ourselves.vue')
+const Login = () => import('../views/Login')
+const Register = () => import('../views/Register.vue')
+const QRAdd = ()=>import('../views/QRAdd.vue')
 
 const routes = [
-  {
-    path: '/',
-    redirect:'/list'
-  },
-  {
+    {
     path: '/list',
-    component:List,
+    component: List,
   },
   {
     path: '/chart',
-    component:Chart
+    component: Chart
   },
   {
     path: '/add',
-    component:Add
+    component: Add
   },
   {
     path: '/search',
-    component:Search
+    component: Search
   },
   {
     path: '/profile',
-    component:Profile
+    component: Profile
   },
   {
-    name:'detail',
-    path:'/detail/:id',
-    component:Detail
+    name: 'detail',
+    path: '/detail/:id',
+    component: Detail
+  },
+  {
+    path: '/qrcode',
+    component: QRCode
+  },
+  {
+    path: '/change',
+    component: Change
+  },
+  {
+    path: '/ourselves',
+    component: Ourselves
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/register',
+    component: Register
+  },
+  {
+    path: '/qradd',
+    component:QRAdd
   }
 ]
 
 const router = new VueRouter({
-  routes,
-  mode: 'history'
-
+  routes
 })
 
+//路由导航守卫
+router.beforeEach((to, from, next) => {
+  const token = window.sessionStorage.getItem('token');
+  if (to.path === '/login' || to.path === '/register' || to.path === '/QRAdd') {
+    return next();
+  }
+  if (!token) {
+    return next('/login');
+  } else {
+    next();
+  }
+
+})
 export default router

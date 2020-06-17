@@ -1,13 +1,8 @@
 <template>
   <div>
-    <TopBar bg-color="#ffffff">
-      <van-col span="9">
-        <van-icon name="arrow-left" size="20" @click="back"/>
-      </van-col>
-      <van-col span="5" class="sticky-text">
-        详细信息
-      </van-col>
-    </TopBar>
+    <SubViewTopBar>
+      详细信息
+    </SubViewTopBar>
     <Card>
       <van-cell title="编号" :value="getItem.id" />
       <van-cell title="姓名" :value="getItem.name" />
@@ -23,23 +18,18 @@
 <script>
   import Card from "../Card";
   import { mapGetters } from 'vuex'
-  import TopBar from "../topBar/TopBar";
+  import SubViewTopBar from "../SubViewTopBar";
 
   export default {
     name: "Detail",
-    components: {TopBar, Card},
+    components: {SubViewTopBar,  Card},
     data() {
       return {
         detailItem:{}
       }
     },
     mounted() {
-      this.detailItem = this.$store.getters.getItem;
-    },
-    methods: {
-      back() {
-        this.$router.push('/list');
-      }
+      this.detailItem = this.getItem;
     },
     computed:{
       ...mapGetters(['getItem'])
@@ -48,18 +38,4 @@
 </script>
 
 <style scoped lang="scss">
-  .sticky-box {
-    background-color: #ffffff;
-
-    .van-icon{
-      color: #787878;
-      margin: 16px 0 0 15px;
-    }
-    .sticky-text {
-      margin-left: 5px;
-      font-size: 16px;
-      color: #787878;
-    }
-  }
-
 </style>

@@ -4,12 +4,8 @@
       <van-col span="12" class="sticky-text">我的</van-col>
     </TopBar>
     <div class="profile-main">
-      <van-cell title="查看二维码" is-link to="index"/>
-      <van-cell title="修改密码" is-link to="index"/>
-      <van-cell title="退出登录" is-link to="index"/>
-      <van-cell title="关于我们" is-link to="index"/>
-
-
+      <van-cell v-for="(item,index) in cellList" :title="item.title" is-link
+                :to="item.to" :key="index" :class="item.style" @click="logout(item.title)"/>
     </div>
     <div class="tab-bar">
       <TabBar/>
@@ -18,8 +14,8 @@
 </template>
 
 <script>
-  import TopBar from "../components/Common/topBar/TopBar";
-  import TabBar from "../components/Common/tabBar/TabBar";
+  import TopBar from "../../components/Common/topBar/TopBar";
+  import TabBar from "../../components/Common/tabBar/TabBar";
 
   export default {
     name: "Profile",
@@ -29,21 +25,32 @@
         cellList: [
           {
             title: '查看二维码',
-            to: '/qrcode'
+            to: '/qrcode',
+            style:'cell-qrcode'
           },
           {
             title: '修改密码',
-            to: '/change'
+            to: '/change',
+            style:'cell-change'
           },
           {
             title: '退出登录',
-            to: '/logout'
+            to: '/login',
+            style:'cell-logout'
           },
           {
             title: '关于我们',
-            to: '/ourselves'
+            to: '/ourselves',
+            style:'cell-ourselves'
           },
         ]
+      }
+    },
+    methods:{
+      logout(title){
+        if (title === '退出登录'){
+          window.sessionStorage.clear();
+        }
       }
     }
   }
@@ -58,5 +65,10 @@
 
   .profile-main {
     margin-top: 30px;
+  }
+
+  .cell-change,
+  .cell-ourselves{
+    margin-top: 10px;
   }
 </style>
