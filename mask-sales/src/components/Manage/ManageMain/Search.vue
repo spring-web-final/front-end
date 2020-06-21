@@ -60,7 +60,6 @@
           </el-table-column>
         </el-table>
       </el-col>
-
     </el-row>
   </el-card>
 </template>
@@ -104,15 +103,10 @@
             if (res.status !== 500) {
               if (select === 'time') {
                 this.tableData = res.data.data.data;
-                console.log(this.tableData)
-                console.log(res.data.data)
                 this.res = `搜索到共 ${res.data.data.total} 条记录`
               } else {
                 if (res.data.data) {
-                  console.log(this.tableData)
                   this.tableData.push(res.data.data);
-                  console.log(res.data.data)
-                  console.log(this.tableData[0])
                   this.res = '搜索到共 1 条记录'
                 }
               }
@@ -120,21 +114,6 @@
               this.$message.error('服务器出错！');
             }
           })
-
-
-        // await searchByOption(url, data).then(res => {
-        //   if (res.data.totalNumber){
-        //     this.tableData.push(res.data);
-        //     this.res = '搜索到共 1 条记录'
-        //   }else {
-        //     this.tableData = res.data.data.data;
-        //     this.res = `搜索到共 ${res.data.totalNumber} 条记录`
-        //   }
-        // })
-
-
-        // this.tableData = this.mock.data.data;
-        // this.res = `搜索到共 ${this.mock.totalNumber} 条记录`
       }
     }
   }

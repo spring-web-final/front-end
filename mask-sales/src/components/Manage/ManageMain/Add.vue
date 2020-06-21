@@ -91,7 +91,6 @@
           addData.train = this.addForm.train;
           addData.time = this.addForm.time;
           addData.wid = window.sessionStorage.getItem('wid');
-          console.log(addData);
           await axios.post('http://localhost:8081/ssm/users/add', addData)
             .then(res => {
               if (res.data.resCode === 0) {
