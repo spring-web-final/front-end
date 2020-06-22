@@ -66,8 +66,7 @@
   import Card from "../components/Common/Card";
 
   import Moment from "moment";
-  import {searchByOption} from "../network/request";
-  import axios from 'axios'
+  import {search} from "../network/request";
 
   export default {
     name: "Search",
@@ -141,13 +140,13 @@
         if (select === '' || data === '') {
           return;
         } else if (select === 'id') {
-          url = `http://localhost:8081/ssm/news/getUser?id=${data}`;
+          url = `/news/getUser?id=${data}`;
         } else if (select === 'date') {
-          url = `http://localhost:8081/ssm/users/getList/time?time=${data}`;
+          url = `/users/getList/time?time=${data}`;
         } else {
-          url = `http://localhost:8081/ssm/users/getList/${select}?${select}=${data}`;
+          url = `/users/getList/${select}?${select}=${data}`;
         }
-        await axios.get(url)
+        await search(url)
             .then(res => {
               if (res.status !== 500) {
                 if (select === 'date' || select === 'name') {

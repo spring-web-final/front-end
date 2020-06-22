@@ -48,9 +48,9 @@
 <script>
   import SubViewTopBar from "../../components/Common/SubViewTopBar";
   import Card from "../../components/Common/Card";
-  import axios from 'axios'
-
   import {Toast} from 'vant';
+
+  import {change} from "../../network/request";
 
   export default {
     name: "Change",
@@ -116,7 +116,7 @@
         data.old_password = formData.oldPwd;
         data.new_password = formData.newPwd;
         data.account = window.sessionStorage.getItem('account');
-        await axios.put('http://localhost:8081/ssm/update', data)
+        await change(data)
             .then(res=>{
               if (res.data.resCode === 0) {
                 Toast('修改成功！');

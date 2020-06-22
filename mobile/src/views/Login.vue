@@ -35,8 +35,9 @@
   import TopBar from "../components/Common/topBar/TopBar";
   import Card from "../components/Common/Card";
 
-  import axios from 'axios'
   import {Toast} from 'vant';
+
+  import {login} from "../network/request";
 
   export default {
     name: "Login",
@@ -53,7 +54,7 @@
     },
     methods: {
       async onSubmit(formData) {
-        await axios.post('http://localhost:8081/ssm/login', formData)
+        await login(formData)
             .then(res => {
               if (res.data.resCode === 0) {
                 window.sessionStorage.setItem('token', 'signed');
@@ -65,6 +66,19 @@
                 Toast('登录失败！')
               }
             })
+
+        // await axios.post('http://localhost:8081/ssm/login', formData)
+        //     .then(res => {
+        //       if (res.data.resCode === 0) {
+        //         window.sessionStorage.setItem('token', 'signed');
+        //         window.sessionStorage.setItem('wid', res.data.data.id);
+        //         window.sessionStorage.setItem('account', this.loginForm.account);
+        //         this.$router.push('/list')
+        //         Toast('登录成功！')
+        //       } else {
+        //         Toast('登录失败！')
+        //       }
+        //     })
       }
     }
   }

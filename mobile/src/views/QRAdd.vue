@@ -81,10 +81,11 @@
   import TabBar from "../components/Common/tabBar/TabBar";
   import TopBar from "../components/Common/topBar/TopBar";
   import Card from "../components/Common/Card";
+  import {Toast} from 'vant';
 
   import Moment from 'moment'
-  import axios from 'axios'
-  import {Toast} from 'vant';
+
+  import {postAddForm} from "../network/request";
 
   export default {
     name: "Add",
@@ -138,7 +139,7 @@
         addData.wid = window.sessionStorage.getItem('wid');
         // console.log(addData);
 
-        await axios.post('http://localhost:8081/ssm/users/add', addData)
+        await postAddForm(addData)
             .then(res => {
               if (res.data.resCode === 0) {
                 Toast('添加成功!');

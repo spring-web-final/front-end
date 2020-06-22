@@ -46,7 +46,7 @@
   import SubViewTopBar from "../components/Common/SubViewTopBar";
   import Card from "../components/Common/Card";
 
-  import axios from 'axios'
+  import {register} from "../network/request";
   import {Toast} from 'vant';
 
   export default {
@@ -96,7 +96,7 @@
         registerData.password = formData.password;
         registerData.name = formData.name;
         console.log(registerData);
-        await axios.post('http://localhost:8081/ssm/register',registerData)
+        await register(registerData)
         .then(res => {
           if (res.data.resCode === 0) {
             Toast('注册成功！');

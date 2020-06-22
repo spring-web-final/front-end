@@ -1,17 +1,25 @@
-import {request} from './base'
+import request from './base'
 
 export function login(formData) {
   return request.post('/login',formData);
 }
 
 export function getListData() {
-  return request.get('/users/getList/all');
+  return request.post('/news/getList');
 }
 
 export function postAddForm(formData) {
   return request.post('/users/add',formData);
 }
 
-export function searchByOption(url, data) {
-  return request.get(url,data);
+export function search(url) {
+  return request.get(url);
+}
+
+export function register(formData) {
+  return request.post('/register',formData);
+}
+
+export function change(formData) {
+  return request.put('/update',formData);
 }
